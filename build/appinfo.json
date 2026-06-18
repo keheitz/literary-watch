@@ -1,0 +1,69 @@
+{
+    "displayName": "literary-watch",
+    "uuid": "1a8e155f-6c9a-4310-9e0f-2e4a23494ad2",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk",
+        "diorite",
+        "emery",
+        "flint",
+        "gabbro"
+    ],
+    "watchapp": {
+        "watchface": true
+    },
+    "messageKeys": {
+        "dummy": 10000
+    },
+    "resources": {
+        "media": [
+            {
+                "type": "raw",
+                "name": "QUOTES_DATA",
+                "file": "data/quotes.bin"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_DAWN",
+                "file": "images/sky/dawn.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_MORNING",
+                "file": "images/sky/morning.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_MIDDAY",
+                "file": "images/sky/midday.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_AFTERNOON",
+                "file": "images/sky/afternoon.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_DUSK",
+                "file": "images/sky/dusk.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "SKY_NIGHT",
+                "file": "images/sky/night.png"
+            }
+        ]
+    },
+    "name": "literary-watch",
+    "shortName": "literary-watch",
+    "longName": "literary-watch",
+    "versionLabel": "1.0.0",
+    "companyName": "MakeAwesomeHappen",
+    "appKeys": {
+        "dummy": 10000
+    },
+    "capabilities": []
+}
