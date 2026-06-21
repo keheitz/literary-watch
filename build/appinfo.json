@@ -3,6 +3,9 @@
     "uuid": "1a8e155f-6c9a-4310-9e0f-2e4a23494ad2",
     "sdkVersion": "3",
     "enableMultiJS": true,
+    "capabilities": [
+        "health"
+    ],
     "targetPlatforms": [
         "aplite",
         "basalt",
@@ -54,6 +57,18 @@
                 "type": "bitmap",
                 "name": "SKY_NIGHT",
                 "file": "images/sky/night.png"
+            },
+            {
+                "type": "font",
+                "name": "FONT_IM_FELL_28",
+                "file": "fonts/IMFellEnglish-Regular.ttf",
+                "characterRegex": "[ -~\u2014]"
+            },
+            {
+                "type": "font",
+                "name": "FONT_IM_FELL_18",
+                "file": "fonts/IMFellEnglish-Regular.ttf",
+                "characterRegex": "[ -~\u2014]"
             }
         ]
     },
@@ -64,6 +79,5 @@
     "companyName": "MakeAwesomeHappen",
     "appKeys": {
         "dummy": 10000
-    },
-    "capabilities": []
+    }
 }

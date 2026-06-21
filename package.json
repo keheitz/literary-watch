@@ -10,6 +10,7 @@
     "uuid": "1a8e155f-6c9a-4310-9e0f-2e4a23494ad2",
     "sdkVersion": "3",
     "enableMultiJS": true,
+    "capabilities": ["health"],
     "targetPlatforms": [
       "aplite",
       "basalt",
@@ -37,7 +38,19 @@
         { "type": "bitmap", "name": "SKY_MIDDAY", "file": "images/sky/midday.png" },
         { "type": "bitmap", "name": "SKY_AFTERNOON", "file": "images/sky/afternoon.png" },
         { "type": "bitmap", "name": "SKY_DUSK", "file": "images/sky/dusk.png" },
-        { "type": "bitmap", "name": "SKY_NIGHT", "file": "images/sky/night.png" }
+        { "type": "bitmap", "name": "SKY_NIGHT", "file": "images/sky/night.png" },
+        {
+          "type": "font",
+          "name": "FONT_IM_FELL_28",
+          "file": "fonts/IMFellEnglish-Regular.ttf",
+          "characterRegex": "[ -~—]"
+        },
+        {
+          "type": "font",
+          "name": "FONT_IM_FELL_18",
+          "file": "fonts/IMFellEnglish-Regular.ttf",
+          "characterRegex": "[ -~—]"
+        }
       ]
     }
   }
