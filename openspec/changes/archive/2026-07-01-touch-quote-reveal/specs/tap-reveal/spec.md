@@ -1,8 +1,5 @@
-# tap-reveal Specification
+## MODIFIED Requirements
 
-## Purpose
-TBD - created by archiving change literary-quote-watchface. Update Purpose after archive.
-## Requirements
 ### Requirement: Reveal quote on tap
 
 The watchface SHALL automatically reveal the current slot's quote when the quarter-hour slot changes while in the resting (sky) state, without requiring any user input. The watchface SHALL NOT depend on the accelerometer tap service or the touch service for the reveal.
@@ -14,12 +11,10 @@ The watchface SHALL automatically reveal the current slot's quote when the quart
 - **WHEN** the watchface is showing the sky and the quarter-hour slot changes
 - **THEN** the quote for the new slot is revealed automatically without user input
 
-### Requirement: Auto-fade after 20 seconds
+## REMOVED Requirements
 
-After a quote is revealed, the watchface SHALL automatically return to the sky resting state 20 seconds later if no further interaction occurs.
+### Requirement: Re-roll on re-tap
 
-#### Scenario: Quote fades back to sky
+**Reason**: The re-roll feature is being dropped at the user's request; the reveal is no longer gesture-driven at all (see above), so there is no re-tap to re-roll on.
 
-- **WHEN** a quote has been displayed for 20 seconds with no further tap
-- **THEN** the watchface returns to the sky resting state
-
+**Migration**: None. The `s_variant` re-roll state is removed; quote selection for a slot is deterministic for the first option only.
