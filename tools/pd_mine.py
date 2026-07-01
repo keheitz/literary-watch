@@ -107,13 +107,37 @@ PATTERN = re.compile(
 
 SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
 
+# Title/rank abbreviations whose period is not a sentence end. Checked
+# case-insensitively against the word immediately before the punctuation.
+ABBREVIATIONS = {
+    "mr", "mrs", "ms", "dr", "st", "prof", "rev", "jr", "sr",
+    "mt", "capt", "col", "gen", "lt", "sgt",
+}
+
+
+def split_sentences(text):
+    """Like SENT_SPLIT.split(text), but does not split right after a known
+    abbreviation (e.g. "Mrs.", "Dr."), since that period isn't a real
+    sentence end -- the split is deferred to the next boundary instead."""
+    pieces = []
+    start = 0
+    for m in SENT_SPLIT.finditer(text):
+        preceding = text[start:m.start()]
+        word = re.search(r"([A-Za-z]+)[.!?]$", preceding)
+        if word and word.group(1).lower() in ABBREVIATIONS:
+            continue
+        pieces.append(preceding)
+        start = m.end()
+    pieces.append(text[start:])
+    return pieces
+
 
 def sentence_around(text, start, end):
     lo = max(0, start - 300)
     hi = min(len(text), end + 300)
     window = re.sub(r"\s+", " ", text[lo:hi]).strip()
     rel = start - lo
-    pieces = SENT_SPLIT.split(window)
+    pieces = split_sentences(window)
     pos = 0
     for p in pieces:
         if pos <= rel <= pos + len(p) + 1:
@@ -173,5 +197,22 @@ def main():
     print(f"\n  wrote {len(candidates)} candidates to {OUT.relative_to(ROOT)}")
 
 
+def _selftest():
+    """Smoke test for split_sentences(): confirms abbreviation periods
+    (e.g. "Mrs.") are not treated as sentence boundaries. Run with
+    `python3 tools/pd_mine.py --selftest`."""
+    text = (
+        "But a visitor had come in at one o'clock, and Mr. Bridgenorth at "
+        "two o'clock; where Job and Mrs. Watson waited. She left at three."
+    )
+    pieces = split_sentences(text)
+    assert not any(p.strip().endswith(("Mr.", "Mrs.")) for p in pieces), pieces
+    assert any("Watson waited." in p for p in pieces), pieces
+    print("pd_mine self-test passed:", pieces)
+
+
 if __name__ == "__main__":
-    main()
+    if "--selftest" in sys.argv:
+        _selftest()
+    else:
+        main()

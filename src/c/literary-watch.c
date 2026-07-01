@@ -5,7 +5,11 @@
 // "A book that tells the time."
 //   SKY state   - ambient book page showing the time-of-day sky.
 //   QUOTE state - a literary quote naming the current quarter-hour, revealed
-//                 on a wrist tap, auto-fading back to the sky after 20s.
+//                 automatically when the slot changes, auto-fading back to
+//                 the sky after 20s. (TouchService does not reach watchface
+//                 apps on real PT2 hardware, despite SDK docs suggesting
+//                 otherwise for future "complications" support, so reveal
+//                 is not gestural.)
 
 #define FADE_TIMEOUT_MS 20000
 #define AUTOSCROLL_INTERVAL_MS 110
@@ -29,7 +33,6 @@ static AppState s_state = STATE_SKY;
 static SkyBand s_band;
 static int s_slot;
 static int s_day;
-static int s_variant;              // advances on re-tap to re-roll the quote
 
 static AppTimer *s_fade_timer;
 static AppTimer *s_scroll_timer;
@@ -218,7 +221,7 @@ static void restart_fade_timer(void) {
 static void reveal_quote(void) {
   refresh_time_context();
 
-  int count = quote_for_slot(s_slot, s_day, s_variant, &s_quote);
+  int count = quote_for_slot(s_slot, s_day, 0, &s_quote);
   if (count == 0) {
     return;  // nothing to show; stay in current state
   }
@@ -256,17 +259,7 @@ static void reveal_quote(void) {
   restart_fade_timer();
 }
 
-// --- input & ticks ---------------------------------------------------------
-
-static void tap_handler(AccelAxisType axis, int32_t direction) {
-  if (s_state == STATE_SKY) {
-    s_variant = 0;
-    reveal_quote();
-  } else {
-    s_variant++;       // re-roll another quote for the same slot
-    reveal_quote();    // also restarts the fade timer
-  }
-}
+// --- ticks -------------------------------------------------------------
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   SkyBand band = band_for_hour(tick_time->tm_hour);
@@ -275,6 +268,14 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     load_sky_bitmap();
   }
   refresh_cover_data();  // keep the date (and steps) current each minute
+
+  // Surface the quote on its own each quarter-hour (touch doesn't reach
+  // watchface apps on real hardware, so there's no tap-to-reveal gesture).
+  int new_slot = slot_for_time(tick_time->tm_hour, tick_time->tm_min);
+  if (new_slot != s_slot && s_state == STATE_SKY) {
+    reveal_quote();
+  }
+
   if (s_state == STATE_SKY) {
     layer_mark_dirty(s_bg_layer);
   }
@@ -346,7 +347,6 @@ static void init(void) {
   });
   window_stack_push(s_window, true);
 
-  accel_tap_service_subscribe(tap_handler);
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 #if defined(PBL_HEALTH)
   health_service_events_subscribe(health_handler, NULL);
@@ -355,7 +355,6 @@ static void init(void) {
 
 static void deinit(void) {
   tick_timer_service_unsubscribe();
-  accel_tap_service_unsubscribe();
   window_destroy(s_window);
 }
 

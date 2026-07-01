@@ -16,6 +16,7 @@ Run from the project root:  python3 tools/build_quotes.py
 """
 
 import csv
+import re
 import struct
 import sys
 from pathlib import Path
@@ -29,6 +30,17 @@ OUT = ROOT / "resources" / "data" / "quotes.bin"
 NUM_SLOTS = 96
 KEEP_PER_SLOT = 3
 SIZE_TARGET_BYTES = 70 * 1024  # ~70 KB soft target from design.md
+
+# Title/rank abbreviations whose trailing period is not a real sentence end
+# (mirrors tools/pd_mine.py). A quote ending right after one of these is a
+# truncated fragment, not a complete sentence, and should be flagged.
+ABBREVIATIONS = {
+    "mr", "mrs", "ms", "dr", "st", "prof", "rev", "jr", "sr",
+    "mt", "capt", "col", "gen", "lt", "sgt",
+}
+TRUNCATED_ABBREV = re.compile(
+    r"\b(" + "|".join(ABBREVIATIONS) + r")\.$", re.IGNORECASE
+)
 
 # Pebble has no room for fancy typography; keep the corpus to characters the
 # bundled fonts render. Map the common "smart" punctuation down to ASCII.
@@ -108,6 +120,20 @@ def main():
         print(f"note: {len(empty)} slot(s) have no quote (sky fallback): {labels}")
 
     selected = select(slots)
+
+    truncated = [
+        (quote, title, author)
+        for entries in selected
+        for quote, title, author in entries
+        if TRUNCATED_ABBREV.search(quote)
+    ]
+    if truncated:
+        print(f"WARNING: {len(truncated)} quote(s) look truncated right after "
+              "an abbreviation (e.g. \"Mr.\"/\"Mrs.\") -- likely a mining bug, "
+              "not a real sentence end:")
+        for quote, title, author in truncated:
+            print(f'  "{quote}" -- {author}, {title}')
+
     blob = pack(selected)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)

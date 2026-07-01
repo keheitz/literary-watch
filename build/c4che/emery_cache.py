@@ -43,7 +43,7 @@ NODE_PATH = '/Users/kellyheitz/Library/Application Support/Pebble SDK/SDKs/curre
 PEBBLE_SDK_COMMON = '/Users/kellyheitz/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/common'
 PEBBLE_SDK_PLATFORM = '/Users/kellyheitz/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/emery'
 PEBBLE_SDK_ROOT = '/Users/kellyheitz/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble'
-PLATFORM = {'NAME': 'emery', 'MAX_APP_BINARY_SIZE': 131072, 'MAX_APP_MEMORY_SIZE': 131072, 'MAX_WORKER_MEMORY_SIZE': 10240, 'MAX_RESOURCES_SIZE_APPSTORE': 262144, 'MAX_RESOURCES_SIZE': 1048576, 'DEFINES': ['PBL_PLATFORM_EMERY', 'PBL_COLOR', 'PBL_RECT', 'PBL_MICROPHONE', 'PBL_SMARTSTRAP', 'PBL_HEALTH', 'PBL_SMARTSTRAP_POWER', 'PBL_COMPASS', 'PBL_TOUCH', 'PBL_RGB_BACKLIGHT', 'PBL_SPEAKER', 'PBL_DISPLAY_WIDTH=200', 'PBL_DISPLAY_HEIGHT=228'], 'BUILD_DIR': 'emery', 'BUNDLE_BIN_DIR': 'emery', 'ADDITIONAL_TEXT_LINES_FOR_PEBBLE_H': [], 'MAX_FONT_GLYPH_SIZE': 512, 'TAGS': ['emery', 'color', 'rect', 'mic', 'strap', 'health', 'strappower', 'compass', 'touch', 'speaker', '200w', '228h']}
+PLATFORM = {'NAME': 'emery', 'MAX_APP_BINARY_SIZE': 131072, 'MAX_APP_MEMORY_SIZE': 131072, 'MAX_WORKER_MEMORY_SIZE': 10240, 'MAX_RESOURCES_SIZE_APPSTORE': 262144, 'MAX_RESOURCES_SIZE': 1048576, 'DEFINES': ['PBL_PLATFORM_EMERY', 'PBL_COLOR', 'PBL_RECT', 'PBL_MICROPHONE', 'PBL_SMARTSTRAP', 'PBL_HEALTH', 'PBL_SMARTSTRAP_POWER', 'PBL_COMPASS', 'PBL_TOUCH', 'PBL_RGB_BACKLIGHT', 'PBL_SPEAKER', 'PBL_DISPLAY_WIDTH=200', 'PBL_DISPLAY_HEIGHT=228'], 'BUILD_DIR': 'emery', 'BUNDLE_BIN_DIR': 'emery', 'ADDITIONAL_TEXT_LINES_FOR_PEBBLE_H': [], 'HAS_MODDABLE_XS': True, 'MAX_FONT_GLYPH_SIZE': 512, 'TAGS': ['emery', 'color', 'rect', 'mic', 'strap', 'health', 'strappower', 'compass', 'touch', 'speaker', '200w', '228h']}
 PLATFORM_NAME = 'emery'
 PREFIX = '/usr/local'
 PROJECT_INFO = {'displayName': 'literary-watch', 'uuid': '1a8e155f-6c9a-4310-9e0f-2e4a23494ad2', 'sdkVersion': '3', 'enableMultiJS': True, 'capabilities': ['health'], 'targetPlatforms': ['aplite', 'basalt', 'chalk', 'diorite', 'emery', 'flint', 'gabbro'], 'watchapp': {'watchface': True}, 'messageKeys': {'dummy': 10000}, 'resources': {'media': [{'type': 'raw', 'name': 'QUOTES_DATA', 'file': 'data/quotes.bin'}, {'type': 'bitmap', 'name': 'SKY_DAWN', 'file': 'images/sky/dawn.png'}, {'type': 'bitmap', 'name': 'SKY_MORNING', 'file': 'images/sky/morning.png'}, {'type': 'bitmap', 'name': 'SKY_MIDDAY', 'file': 'images/sky/midday.png'}, {'type': 'bitmap', 'name': 'SKY_AFTERNOON', 'file': 'images/sky/afternoon.png'}, {'type': 'bitmap', 'name': 'SKY_DUSK', 'file': 'images/sky/dusk.png'}, {'type': 'bitmap', 'name': 'SKY_NIGHT', 'file': 'images/sky/night.png'}, {'type': 'font', 'name': 'FONT_IM_FELL_28', 'file': 'fonts/IMFellEnglish-Regular.ttf', 'characterRegex': '[ -~\u2014]'}, {'type': 'font', 'name': 'FONT_IM_FELL_18', 'file': 'fonts/IMFellEnglish-Regular.ttf', 'characterRegex': '[ -~\u2014]'}]}, 'name': 'literary-watch', 'shortName': 'literary-watch', 'longName': 'literary-watch', 'versionLabel': '1.0.0', 'companyName': 'MakeAwesomeHappen', 'appKeys': {'dummy': 10000}}
@@ -52,7 +52,7 @@ RESOURCES_JSON = [{'type': 'raw', 'name': 'QUOTES_DATA', 'file': 'data/quotes.bi
 RPATH_ST = '-Wl,-rpath,%s'
 SANDBOX = False
 SDK_VERSION_MAJOR = 5
-SDK_VERSION_MINOR = 95
+SDK_VERSION_MINOR = 101
 SHLIB_MARKER = None
 SIZE = 'arm-none-eabi-size'
 SONAME_ST = '-Wl,-h,%s'
@@ -61,7 +61,7 @@ STLIB_MARKER = None
 STLIB_ST = '-l%s'
 SUPPORTED_PLATFORMS = ['basalt', 'aplite', 'diorite', 'chalk', 'flint', 'emery', 'gabbro']
 TARGET_PLATFORMS = ['gabbro', 'flint', 'emery', 'diorite', 'chalk', 'basalt', 'aplite']
-TIMESTAMP = 1781986107
+TIMESTAMP = 1782933348
 USE_GROUPS = True
 VERBOSE = 0
 WEBPACK = ['/Users/kellyheitz/Library/Application Support/Pebble SDK/SDKs/current/node_modules/.bin/webpack']

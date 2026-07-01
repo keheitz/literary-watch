@@ -5,12 +5,14 @@ TBD - created by archiving change literary-quote-watchface. Update Purpose after
 ## Requirements
 ### Requirement: Reveal quote on tap
 
-The watchface SHALL listen for an accelerometer tap while in the resting (sky) state, and on tap SHALL transition to showing the literary quote for the current quarter-hour slot.
+The watchface SHALL automatically reveal the current slot's quote when the quarter-hour slot changes while in the resting (sky) state, without requiring any user input. The watchface SHALL NOT depend on the accelerometer tap service or the touch service for the reveal.
 
-#### Scenario: Tap reveals quote
+**Note**: A spike on physical Pebble Time 2 (emery) hardware confirmed `TouchService` does not deliver touch events to a watchface window — a tap wakes the backlight (a system-level gesture) but the app's `touch_service_subscribe` handler never fires. This matches the developer docs' statement that touch is "intentionally restricted to watchapps." All platforms, including emery, therefore use the auto-reveal-on-quarter-hour behavior; there is no touch-capable code path.
 
-- **WHEN** the watchface is showing the sky and the user taps the wrist
-- **THEN** the quote for the current slot is revealed
+#### Scenario: Auto-reveal on quarter-hour (all platforms)
+
+- **WHEN** the watchface is showing the sky and the quarter-hour slot changes
+- **THEN** the quote for the new slot is revealed automatically without user input
 
 ### Requirement: Auto-fade after 20 seconds
 
@@ -20,20 +22,4 @@ After a quote is revealed, the watchface SHALL automatically return to the sky r
 
 - **WHEN** a quote has been displayed for 20 seconds with no further tap
 - **THEN** the watchface returns to the sky resting state
-
-### Requirement: Re-roll on re-tap
-
-When the user taps again while a quote is already displayed, the watchface SHALL replace it with another quote from the same slot (if the slot holds more than one) and SHALL restart the 20-second fade timer.
-
-#### Scenario: Re-tap shows another quote
-
-- **WHEN** a quote is displayed and the slot holds more than one quote and the user taps again
-- **THEN** a different quote from the same slot is shown
-- **AND** the 20-second auto-fade timer restarts
-
-#### Scenario: Re-tap with single-quote slot
-
-- **WHEN** a quote is displayed, the slot holds only one quote, and the user taps again
-- **THEN** the same quote remains shown
-- **AND** the 20-second auto-fade timer restarts
 
